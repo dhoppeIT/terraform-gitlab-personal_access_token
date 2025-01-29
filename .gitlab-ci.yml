@@ -1,0 +1,98 @@
+---
+include:
+  - project: ci-templates-48151/gitlab-ci-templates
+    ref: v1.5.0
+    file: /lint/commit.yml
+  - project: ci-templates-48151/gitlab-ci-templates
+    ref: v1.5.0
+    file: /lint/markdown.yml
+    inputs:
+      path: README.md examples/default/README.md
+  - project: ci-templates-48151/gitlab-ci-templates
+    ref: v1.5.0
+    file: /security/gitleaks.yml
+  - project: ci-templates-48151/gitlab-ci-templates
+    ref: v1.5.0
+    file: /validate/tflint.yml
+  - project: ci-templates-48151/gitlab-ci-templates
+    ref: v1.5.0
+    file: /test/renovate.yml
+  - project: ci-templates-48151/gitlab-ci-templates
+    ref: v1.5.0
+    file: /test/trivy.yml
+  - project: ci-templates-48151/gitlab-ci-templates
+    ref: v1.5.0
+    file: /release/semantic.yml
+  - template: Jobs/SAST-IaC.latest.gitlab-ci.yml
+  - template: Terraform/Base.latest.gitlab-ci.yml
+  - template: Terraform/Module-Base.gitlab-ci.yml
+  - template: Workflows/MergeRequest-Pipelines.gitlab-ci.yml
+
+stages:
+  - lint
+  - security
+  - test
+  - validate
+  - release
+  - deploy
+
+variables:
+  IGNORE_TF_DEPRECATION_WARNING: true
+
+.terraform: &terraform-rules
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - "**/*.hcl"
+        - "**/*.tf"
+    - if: $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH
+
+# lint
+commit:
+  extends: .lint:commit
+
+markdown:
+  extends: .lint:markdown
+
+# security
+gitleaks:
+  extends: .security:gitleaks
+
+# test
+renovate:config-validator:
+  extends: .renovate:config-validator
+
+trivy:
+  extends: .trivy
+
+# validate
+terraform:fmt:
+  extends: .terraform:fmt
+  <<: *terraform-rules
+
+terraform:validate:
+  extends: .terraform:validate
+  <<: *terraform-rules
+
+tflint:
+  extends: .tflint
+  dependencies:
+    - terraform:validate
+
+# release
+semantic:
+  extends: .release:semantic
+  artifacts:
+    reports:
+      dotenv: version.env
+
+# deploy
+terraform-module:deploy:
+  extends: .terraform-module:deploy
+  dependencies:
+    - semantic
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      allow_failure: true

@@ -1,27 +1,27 @@
 ---
 include:
   - project: ci-templates-48151/gitlab-ci-templates
-    ref: v1.5.0
+    ref: v1.5.1
     file: /lint/commit.yml
   - project: ci-templates-48151/gitlab-ci-templates
-    ref: v1.5.0
+    ref: v1.5.1
     file: /lint/markdown.yml
     inputs:
       path: README.md examples/default/README.md
   - project: ci-templates-48151/gitlab-ci-templates
-    ref: v1.5.0
+    ref: v1.5.1
     file: /security/gitleaks.yml
   - project: ci-templates-48151/gitlab-ci-templates
-    ref: v1.5.0
+    ref: v1.5.1
     file: /validate/tflint.yml
   - project: ci-templates-48151/gitlab-ci-templates
-    ref: v1.5.0
+    ref: v1.5.1
     file: /test/renovate.yml
   - project: ci-templates-48151/gitlab-ci-templates
-    ref: v1.5.0
+    ref: v1.5.1
     file: /test/trivy.yml
   - project: ci-templates-48151/gitlab-ci-templates
-    ref: v1.5.0
+    ref: v1.5.1
     file: /release/semantic.yml
   - template: Jobs/SAST-IaC.latest.gitlab-ci.yml
   - template: Terraform/Base.latest.gitlab-ci.yml

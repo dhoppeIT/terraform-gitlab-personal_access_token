@@ -36,9 +36,6 @@ stages:
   - release
   - deploy
 
-variables:
-  IGNORE_TF_DEPRECATION_WARNING: true
-
 .terraform: &terraform-rules
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"

@@ -1,31 +1,35 @@
 ---
 include:
   - project: ci-templates-48151/gitlab-ci-templates
-    ref: v1.5.1
+    ref: v1.6.0
     file: /lint/commit.yml
   - project: ci-templates-48151/gitlab-ci-templates
-    ref: v1.5.1
+    ref: v1.6.0
     file: /lint/markdown.yml
     inputs:
       path: README.md examples/default/README.md
   - project: ci-templates-48151/gitlab-ci-templates
-    ref: v1.5.1
+    ref: v1.6.0
     file: /security/gitleaks.yml
   - project: ci-templates-48151/gitlab-ci-templates
-    ref: v1.5.1
+    ref: v1.6.0
     file: /validate/tflint.yml
   - project: ci-templates-48151/gitlab-ci-templates
-    ref: v1.5.1
+    ref: v1.6.0
     file: /test/renovate.yml
   - project: ci-templates-48151/gitlab-ci-templates
-    ref: v1.5.1
+    ref: v1.6.0
     file: /test/trivy.yml
   - project: ci-templates-48151/gitlab-ci-templates
-    ref: v1.5.1
+    ref: v1.6.0
     file: /release/semantic.yml
   - template: Jobs/SAST-IaC.latest.gitlab-ci.yml
-  - template: Terraform/Base.latest.gitlab-ci.yml
-  - template: Terraform/Module-Base.gitlab-ci.yml
+  - project: ci-templates-48151/gitlab-ci-templates
+    ref: v1.6.0
+    file: /common/terraform.yml
+  - project: ci-templates-48151/gitlab-ci-templates
+    ref: v1.6.0
+    file: /common/terraform-module.yml
   - template: Workflows/MergeRequest-Pipelines.gitlab-ci.yml
 
 stages:
@@ -35,16 +39,6 @@ stages:
   - validate
   - release
   - deploy
-
-.terraform: &terraform-rules
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      changes:
-        - "**/*.hcl"
-        - "**/*.tf"
-    - if: $CI_OPEN_MERGE_REQUESTS
-      when: never
-    - if: $CI_COMMIT_BRANCH
 
 # lint
 commit:
@@ -67,11 +61,9 @@ trivy:
 # validate
 terraform:fmt:
   extends: .terraform:fmt
-  <<: *terraform-rules
 
 terraform:validate:
   extends: .terraform:validate
-  <<: *terraform-rules
 
 tflint:
   extends: .tflint

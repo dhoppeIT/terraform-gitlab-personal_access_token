@@ -12,7 +12,7 @@ specify the required variables and run the command `terraform init`.
 ```hcl
 module "gitlab_user" {
   source  = "gitlab.com/terraform-child-modules-48151/terraform-gitlab-user/local"
-  version = "1.1.2"
+  version = "1.2.0"
 
   name     = "John Doe"
   username = "jdoe"

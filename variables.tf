@@ -18,6 +18,12 @@ variable "user_id" {
   description = "The ID of the user"
 }
 
+variable "description" {
+  type        = string
+  default     = null
+  description = "The description of the personal access token"
+}
+
 variable "expires_at" {
   type        = string
   default     = null

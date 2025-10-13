@@ -5,7 +5,7 @@ default_install_hook_types:
 
 repos:
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.101.0
+    rev: v1.101.1
     hooks:
       - id: terraform_fmt
         args:
@@ -45,7 +45,7 @@ repos:
         stages: ['pre-commit']
 
   - repo: https://github.com/compilerla/conventional-pre-commit
-    rev: v4.2.0
+    rev: v4.3.0
     hooks:
       - id: conventional-pre-commit
         stages: ['commit-msg']
@@ -67,7 +67,7 @@ repos:
         stages: ['pre-commit']
 
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 41.137.1
+    rev: 41.146.2
     hooks:
       - id: renovate-config-validator
         stages: ['pre-commit']

@@ -72,6 +72,7 @@ No modules.
 | <a name="input_rotation_configuration"></a> [rotation\_configuration](#input\_rotation\_configuration) | The configuration for when to rotate a token automatically | ```object( { expiration_days = optional(number) rotate_before_days = optional(number) } )``` | `{}` | no |
 | <a name="input_scopes"></a> [scopes](#input\_scopes) | The scopes of the personal access token | `list(string)` | n/a | yes |
 | <a name="input_user_id"></a> [user\_id](#input\_user\_id) | The ID of the user | `string` | n/a | yes |
+| <a name="input_validate_past_expiration_date"></a> [validate\_past\_expiration\_date](#input\_validate\_past\_expiration\_date) | Wether to validate if the expiration date is in the future | `bool` | `null` | no |
 
 ## Outputs
 

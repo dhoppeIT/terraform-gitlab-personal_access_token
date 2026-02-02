@@ -40,3 +40,9 @@ variable "rotation_configuration" {
   default     = {}
   description = "The configuration for when to rotate a token automatically"
 }
+
+variable "validate_past_expiration_date" {
+  type        = bool
+  default     = null
+  description = "Wether to validate if the expiration date is in the future"
+}

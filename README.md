@@ -12,7 +12,7 @@ specify the required variables and run the command `terraform init`.
 ```hcl
 module "gitlab_user" {
   source  = "gitlab.com/terraform-child-modules-48151/terraform-gitlab-user/local"
-  version = "1.2.0"
+  version = "2.0.0"
 
   name     = "John Doe"
   username = "jdoe"
@@ -22,7 +22,7 @@ module "gitlab_user" {
 
 module "gitlab_personal_access_token" {
   source  = "gitlab.com/terraform-child-modules-48151/terraform-gitlab-personal-access-token/local"
-  version = "1.0.0"
+  version = "2.0.0"
 
   name    = "example-access-token"
   scopes  = ["read_api"]
@@ -42,15 +42,15 @@ instance.
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_gitlab"></a> [gitlab](#requirement\_gitlab) | ~> 18.0 |
+| <a name="requirement_gitlab"></a> [gitlab](#requirement\_gitlab) | ~> 19.0 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
-| <a name="provider_gitlab"></a> [gitlab](#provider\_gitlab) | ~> 18.0 |
+| ---- | ------- |
+| <a name="provider_gitlab"></a> [gitlab](#provider\_gitlab) | ~> 19.0 |
 
 ## Modules
 
@@ -59,25 +59,25 @@ No modules.
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [gitlab_personal_access_token.this](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/personal_access_token) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_description"></a> [description](#input\_description) | The description of the personal access token | `string` | `null` | no |
-| <a name="input_expires_at"></a> [expires\_at](#input\_expires\_at) | When the token will expire, YYYY-MM-DD format | `string` | `null` | no |
+| <a name="input_expires_at"></a> [expires\_at](#input\_expires\_at) | When the token will expire, YYYY-MM-DD format. Is automatically set when rotation\_configuration is used | `string` | `null` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name of the personal access token | `string` | n/a | yes |
-| <a name="input_rotation_configuration"></a> [rotation\_configuration](#input\_rotation\_configuration) | The configuration for when to rotate a token automatically | ```object( { expiration_days = optional(number) rotate_before_days = optional(number) } )``` | `{}` | no |
-| <a name="input_scopes"></a> [scopes](#input\_scopes) | The scopes of the personal access token | `list(string)` | n/a | yes |
-| <a name="input_user_id"></a> [user\_id](#input\_user\_id) | The ID of the user | `string` | n/a | yes |
-| <a name="input_validate_past_expiration_date"></a> [validate\_past\_expiration\_date](#input\_validate\_past\_expiration\_date) | Wether to validate if the expiration date is in the future | `bool` | `null` | no |
+| <a name="input_rotation_configuration"></a> [rotation\_configuration](#input\_rotation\_configuration) | The configuration for when to rotate a token automatically. Will not rotate a token until terraform apply is run | ```object( { expiration_days = number rotate_before_days = number } )``` | `null` | no |
+| <a name="input_scopes"></a> [scopes](#input\_scopes) | The scopes of the personal access token | `set(string)` | n/a | yes |
+| <a name="input_user_id"></a> [user\_id](#input\_user\_id) | The ID of the user | `number` | n/a | yes |
+| <a name="input_validate_past_expiration_date"></a> [validate\_past\_expiration\_date](#input\_validate\_past\_expiration\_date) | Whether to validate if the expiration date is in the future | `bool` | `null` | no |
 
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_active"></a> [active](#output\_active) | True if the token is active |
 | <a name="output_created_at"></a> [created\_at](#output\_created\_at) | Time the token has been created, RFC3339 format |
 | <a name="output_id"></a> [id](#output\_id) | The ID of the personal access token |

@@ -22,10 +22,28 @@ variable "client_key" {
   description = "File path to client key when GitLab instance is behind company proxy"
 }
 
+variable "config_file" {
+  type        = string
+  default     = null
+  description = "The path to the configuration file to use"
+}
+
+variable "context" {
+  type        = string
+  default     = null
+  description = "The context to use for authentication and configuration"
+}
+
 variable "early_auth_check" {
   type        = bool
   default     = true
   description = "By default the provider does a dummy request to get the current user in order to verify that the provider configuration is correct and the GitLab API is reachable"
+}
+
+variable "enable_auto_ci_support" {
+  type        = bool
+  default     = null
+  description = "If automatic CI support should be enabled or not"
 }
 
 variable "headers" {
